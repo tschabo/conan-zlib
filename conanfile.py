@@ -37,3 +37,12 @@ class ZlibConan(ConanFile):
             self.copy("lib/zlibstatic.lib", src="install")
         self.copy("*.h", src="install")
 
+    def package_info(self):
+        self.cpp_info.includedirs = ['include']  # Ordered list of include paths
+        if self.options.shared:
+            self.cpp_info.libs = ["zlib"]  # The libs to link against
+        else:
+            self.cpp_info.libs = ["zlibshared"] # The libs to link against
+        self.cpp_info.libdirs = ['lib']  # Directories where libraries can be found
+        self.cpp_info.bindirs = ['bin']  # Directories where executables and shared libs can be found
+        
