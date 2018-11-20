@@ -1,0 +1,18 @@
+--- CMakeLists.txt	2017-01-15 09:29:40.000000000 +0100
++++ CMakeLists.1.txt	2018-11-20 12:18:55.201917900 +0100
+@@ -24,6 +24,15 @@
+ check_include_file(stdint.h    HAVE_STDINT_H)
+ check_include_file(stddef.h    HAVE_STDDEF_H)
+ 
++foreach(flag_var
++        CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
++        CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
++   if(${flag_var} MATCHES "/MD")
++      string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
++   endif(${flag_var} MATCHES "/MD")
++endforeach(flag_var)
++
++
+ #
+ # Check to see if we have large file support
+ #
